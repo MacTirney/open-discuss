@@ -40,3 +40,43 @@
 .read-the-docs {
   color: #888;
 } */
+
+/* * {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: yellow;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: blue;
+    height: 90px;
+    padding: 30px 25px;
+}
+
+.nav--left, .nav--right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: red;
+    justify-content: space-between;
+}
+
+.nav--left {
+    margin-left: 0;
+}
+
+.nav--right {
+    width: 65%;
+}
+
+.nav--logo {
+    height: 90px;
+    margin-right: 7px;
+} */
