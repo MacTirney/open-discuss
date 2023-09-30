@@ -42,6 +42,16 @@ app.use('/communities', communityRoutes);
 app.use('/', commentRoutes);
 app.use('/', userRoutes)
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Oops looks like you ended up in the wrong spot!', 404))
+})
+
+app.use( (err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Oops, Something went wrong"
+    res.status(statusCode).render('error', { err })
+})
+
 // Server
 app.listen(port, () => {
     console.log(`Server Port: ${port}`);
