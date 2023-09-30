@@ -5,6 +5,12 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const resourceRoutes = require('../routes/resources')
+const discussionRoutes = require('../routes/discussions')
+const communityRoutes = require('../routes/communities')
+const commentRoutes = require('../routes/comments')
+const userRoutes = require('../routes/users')
+
 // Configurations
 dotenv.config()
 const app = express();
@@ -29,6 +35,12 @@ db.once("open", () => {
 app.get('/', (req, res) => {
     res.render('home')
 });
+
+app.use('/resources', resourceRoutes);
+app.use('/discussions', discussionRoutes);
+app.use('/communities', communityRoutes);
+app.use('/', commentRoutes);
+app.use('/', userRoutes)
 
 // Server
 app.listen(port, () => {
