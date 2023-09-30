@@ -56,3 +56,45 @@ app.use( (err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server Port: ${port}`);
 })
+
+
+
+// Resources Routes
+app.get('/resources', catchAsync (async (req, res) => {
+    const resources = await Resource.find({})
+    res.json({ resources })
+}))
+
+app.post('/resources', catchAsync (async (req,res) => {
+    const resource = new Resource(req.body.resource)
+    const savedResource = await resource.save();
+    res.json({ savedResource })
+}))
+
+app.get('/resources/new', (req,res) => {
+    res.json({ success: true, message: 'Rendering new form' });
+})
+
+app.get('/resources/:id', catchAsync (async (req,res) => {
+    const { id } = req.params
+    const resourceRender = await Resource.findById(id)
+    res.json({ resourceRender })
+}))
+
+app.get('/resources/:id/edit', catchAsync (async (req, res) => {
+    const { id } = req.params
+    const resourceEdit = await Resource.findById(id)
+    res.json({ resourceEdit })
+}))
+
+app.put('/resources/:id', catchAsync (async (req, res) => {
+    const { id } = req.params
+    const resourceUpdate = await Resource.findByIdAndUpdate(id, { ...req.body.resource }, { new: true })
+    res.json({ resourceUpdate })
+}))
+
+app.delete('/resources/:id', catchAsync (async (req,res) => {
+    const { id } = req.params
+    const resourceDelete = await Resource.findByIdAndDelete(id)
+    res.json({ resourceDelete })
+}))
