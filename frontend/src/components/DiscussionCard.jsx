@@ -35,7 +35,7 @@ export default function DiscussionCard() {
     };
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, margin: "20px 0" }}>
             <Box sx={{ display: 'flex' }}>
                 <CardHeader
                     title="Discussion Name"
@@ -51,7 +51,7 @@ export default function DiscussionCard() {
             </Box>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>Small excerpt per post...</Typography>
+                    <Typography paragraph>Small excerpt of the content within the post...</Typography>
                 </CardContent>
             </Collapse>
         </Card>

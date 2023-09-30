@@ -80,3 +80,12 @@ body {
     height: 90px;
     margin-right: 7px;
 } */
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    align-items: center;
+    /* justify-content: center; */
+    margin: 0 10%;
+}
