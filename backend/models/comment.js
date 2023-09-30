@@ -3,7 +3,8 @@ const { Schema, model } = mongoose;
 
 const commentSchema = new Schema({
   userId: Number,
-  text: String,
+  postId: mongoose.ObjectId,
+  content: String,
   time: Date
 });
 

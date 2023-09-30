@@ -11,11 +11,15 @@ db.once('open', () => {
     console.log('Database connected');
 });
 
+// iterate over sampleComments
+  // add commentId to commentIds in the post document
 const seedDB = async () => {
   await Comment.deleteMany({});
   for (sampleComment of sampleComments) {
     const Comment = new Comment({
       userId: sampleComment.userId,
+      displayName: sampleComment.displayName,
+      postId: sampleComment.postId,
       text: sampleComment.text,
       time: sampleComment.time
     })

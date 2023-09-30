@@ -4,10 +4,11 @@ const { Schema, model } = mongoose;
 const postSchema = new Schema({
   // userId: mongoose.ObjectId,
   // community: mongoose.ObjectId,
-  // postId: Number,
-  // time: Date,
+  postNumber: Number,
+  timestamp: Date,
   title: String,
-  details: String
+  content: String,
+  commentIds: Array
 });
 
 module.exports = model('Post', postSchema);
