@@ -18,10 +18,11 @@ const seedDB = async () => {
     const post = new Post({
       // userId: samplePost.userId,
       // community: samplePost.community,
-      // postId: samplePost.postId,
-      // time: samplePost.time,
+      postNumber: samplePost.postNumber,
+      timestamp: samplePost.timestamp,
       title: samplePost.title,
-      details: samplePost.details
+      content: samplePost.content,
+      commentIds: samplePost.commentIds
     });
     await post.save();
   }
