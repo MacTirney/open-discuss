@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 // import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -35,20 +37,20 @@ export default function DiscussionCard() {
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: "20px 0" }}>
-      <Box sx={{ display: 'flex' }}>
-        <CardHeader
-          title="Discussion Name"
-        />
+    <Card sx={{ minWidth: 345, maxWidth: 345, margin: "20px 0" }}>
+      <Box sx={{ display: 'flex', margin: "15px"}} onClick={handleExpandClick}>
+        <Button>
+        Discussion Name
+        </Button>
         <ExpandMore
           expand={expanded}
-          onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
           <ExpandMoreIcon />
         </ExpandMore>
       </Box>
+      <Divider variant="middle"/>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Small excerpt of the content within the post...</Typography>

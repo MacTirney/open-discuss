@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar disableGutters>
           {/* <IconButton
             size="large"
             edge="start"
@@ -32,20 +32,29 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton> */}
           <Box
+            className="clickable"
             component="img"
             sx={{ height: 54 }}
             alt="Logo"
             src={logo}
+            onClick={() => navigate("/")}
           >
           </Box>
           {/* <img src={logo} /> */}
-          <Typography
+          <Box
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
           >
-            Open Discuss
-          </Typography>
+            <Button 
+              onClick={() => navigate("/")}
+              sx= {{
+              fontSize: 'large',
+              color: 'white'
+            }}>
+              Open Discuss
+            </Button>
+          </Box>
           <Button 
             color="inherit"
             onClick={() => navigate("/discuss")}

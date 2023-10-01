@@ -89,3 +89,7 @@ body {
   /* justify-content: center; */
   margin: 0 10%;
 }
+
+.clickable:hover {
+  cursor: pointer;
+}
