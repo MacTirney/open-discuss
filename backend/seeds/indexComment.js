@@ -17,11 +17,11 @@ const seedDB = async () => {
   await Comment.deleteMany({});
   for (sampleComment of sampleComments) {
     const Comment = new Comment({
-      userId: sampleComment.userId,
+      // userId: sampleComment.userId,
       displayName: sampleComment.displayName,
       postId: sampleComment.postId,
-      text: sampleComment.text,
-      time: sampleComment.time
+      content: sampleComment.content,
+      timestamp: sampleComment.timestamp
     })
   }
 }

@@ -5,6 +5,7 @@ const postSchema = new Schema({
   // userId: mongoose.ObjectId,
   // community: mongoose.ObjectId,
   postNumber: Number,
+  displayName: String,
   timestamp: Date,
   title: String,
   content: String,

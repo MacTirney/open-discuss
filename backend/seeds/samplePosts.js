@@ -3,6 +3,7 @@ module.exports = [
     // userId: "",
     // community: "",
     postNumber: 1,
+    displayName: "Arthur Read",
     timestamp: new Date(),
     title: "How can I get started with contributing to open source?",
     content: "I'm new to the open source community and I'd like to \
@@ -13,6 +14,7 @@ module.exports = [
     // userId: "",
     // community: "",
     postNumber: 2,
+    displayName: "DW Read",
     timestamp: new Date(),
     title: "List of open source communities",
     content: "For anyone who is trying to join open source communities, \
@@ -23,6 +25,7 @@ module.exports = [
     // userId: "",
     // community: "",
     postNumber: 3,
+    displayName: "Buster Baxter",
     timestamp: new Date(),
     title: "How do I make a pull request?",
     content: "For anyone who is trying to join open source communities, \
@@ -33,6 +36,7 @@ module.exports = [
     // userId: "",
     // community: "",
     postNumber: 4,
+    displayName: "Francine Frensky",
     timestamp: new Date(),
     title: "I have a merge conflict I can't resolve",
     content: "I'm trying to merge my branch into main, and I don't know how to resolve them. \n \

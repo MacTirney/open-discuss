@@ -19,6 +19,7 @@ const seedDB = async () => {
       // userId: samplePost.userId,
       // community: samplePost.community,
       postNumber: samplePost.postNumber,
+      displayName: samplePost.displayName,
       timestamp: samplePost.timestamp,
       title: samplePost.title,
       content: samplePost.content,

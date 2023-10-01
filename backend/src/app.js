@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require("path");
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 const app = express();
 
@@ -60,9 +61,42 @@ app.put('/submitPost', async (req, res) => {
 /**
  * Submit a comment under a post
  * - Path: `/submitComment/:userId/:postId`
+ * - Body:
+ *      userId: ObjectId
+ *      postId: ObjectId
+ *      displayName: String
+ *      content: String
+ *      timestamp: Date
  * @method put
  */
-app.put('/submitComment', (req, res) => {
+app.put('/submitComment/:postId', async (req, res) => {
+    const postId = mongoose.Types.ObjectId(req.params.postId)
+    try {
+        const comment = new Comment({
+            ...req.body,
+            postId: postId,
+            timestamp: new Date()
+        })
+        console.log(comment);
+        const result = await comment.save();
+
+        const post = await Post.findById(postId);
+        console.log(post);
+        const update = { commentIds: [...post.commentIds, result._id] };
+        const filter = { _id: postId}
+
+        Post.findOneAndUpdate(filter, update, { new: true }, (err, doc) => {
+            if (err) {
+              console.error('Error updating the document', err);
+            } else {
+                console.log('Updated document', doc);
+            }
+          });
+
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).send(error)
+    }
 
 });
 

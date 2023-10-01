@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const commentSchema = new Schema({
-  userId: Number,
+  // userId: Number,
   postId: mongoose.ObjectId,
+  displayName: String,
   content: String,
-  time: Date
+  timestamp: Date
 });
 
 module.exports = model('Comment', commentSchema);
