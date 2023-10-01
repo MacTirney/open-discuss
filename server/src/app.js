@@ -4,24 +4,30 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const path = require('path');
+const catchAsync = require('../Utils/catchAsync')
+const ExpressError = require('../Utils/ExpressError')
 
-const resourceRoutes = require('../routes/resources')
-const discussionRoutes = require('../routes/discussions')
-const communityRoutes = require('../routes/communities')
-const commentRoutes = require('../routes/comments')
-const userRoutes = require('../routes/users')
+// const resourceRoutes = require('../routes/resources')
+// const discussionRoutes = require('../routes/discussions')
+// const communityRoutes = require('../routes/communities')
+// const userRoutes = require('../routes/users')
+
+const Comment = require('../models/comment')
+const Community = require('../models/community')
+const Discussion = require('../models/post')
+const Resource = require('../models/resource')
 
 // Configurations
-dotenv.config()
+dotenv.config();
 const app = express();
-app.use(express.json);
+// app.use(express.json);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Mongoose -> Mongo Connection
-const port = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 const db = mongoose.connection;
 
 mongoose.connect(process.env.MONGO_CONNECTION);
@@ -33,14 +39,66 @@ db.once("open", () => {
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('home')
+    try {
+        // res.json('Hello')
+        res.send('Hello');
+        console.log('Hello');
+    } catch (error) {
+        res.status(500).send('Internal Server Error');
+        console.error(error);
+    }
 });
 
-app.use('/resources', resourceRoutes);
-app.use('/discussions', discussionRoutes);
-app.use('/communities', communityRoutes);
-app.use('/', commentRoutes);
-app.use('/', userRoutes)
+// app.use('/resources', resourceRoutes);
+// app.use('/discussions', discussionRoutes);
+// app.use('/communities', communityRoutes);
+// app.use('/', userRoutes)
+
+app.get('/discussions', catchAsync (async (req, res) => {
+    const discussions = await Discussion.find({})
+    // res.json({ discussions })
+    res.send({ discussions })
+}))
+
+// Discussion - Get - Sends a success message when a New discussion post is rendered
+app.get('/discussions/new', (req,res) => {
+    res.json({ success: true, message: 'Rendering new discussion post' });
+})
+
+// Discussion - Post - Creates a new individual discussion post either associated with a community or no community
+app.post('/discussions', catchAsync (async (req,res) => {
+    const discussion = new Discussion(req.body.discussion)
+    const savedDiscussion = await discussion.save();
+    res.json({ savedDiscussion })
+}))
+
+// Discussion - Get - Displays an individual discussion posts data
+app.get('/discussions/:id', catchAsync (async (req,res) => {
+    const { id } = req.params
+    const discussionRender = await Discussion.findById(id)
+    res.json({ discussionRender })
+}))
+
+// Discussion - Get - Populates an Edit form to allow for the user that made the discussion post to edit it
+app.get('/discussions/:id/edit', catchAsync (async (req, res) => {
+    const { id } = req.params
+    const discussionEdit = await Discussion.findById(id)
+    res.json({ discussionEdit })
+}))
+
+// Discussion - Put - Updates the discussion post with the updated data that was submitted from the edit form
+app.put('/discussions/:id', catchAsync (async (req, res) => {
+    const { id } = req.params
+    const discussionUpdate = await Discussion.findByIdAndUpdate(id, { ...req.body.discussion }, { new: true })
+    res.json({ discussionUpdate })
+}))
+
+// Discussion - Delete - Deletes the discussion and associated data / comments 
+app.delete('/discussions/:id', catchAsync (async (req,res) => {
+    const { id } = req.params
+    const discussionDelete = await Discussion.findByIdAndDelete(id)
+    res.json({ discussionDelete })
+}))
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Oops looks like you ended up in the wrong spot!', 404))
@@ -53,48 +111,6 @@ app.use( (err, req, res, next) => {
 })
 
 // Server
-app.listen(port, () => {
-    console.log(`Server Port: ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server Port: ${PORT}`);
 })
-
-
-
-// Resources Routes
-app.get('/resources', catchAsync (async (req, res) => {
-    const resources = await Resource.find({})
-    res.json({ resources })
-}))
-
-app.post('/resources', catchAsync (async (req,res) => {
-    const resource = new Resource(req.body.resource)
-    const savedResource = await resource.save();
-    res.json({ savedResource })
-}))
-
-app.get('/resources/new', (req,res) => {
-    res.json({ success: true, message: 'Rendering new form' });
-})
-
-app.get('/resources/:id', catchAsync (async (req,res) => {
-    const { id } = req.params
-    const resourceRender = await Resource.findById(id)
-    res.json({ resourceRender })
-}))
-
-app.get('/resources/:id/edit', catchAsync (async (req, res) => {
-    const { id } = req.params
-    const resourceEdit = await Resource.findById(id)
-    res.json({ resourceEdit })
-}))
-
-app.put('/resources/:id', catchAsync (async (req, res) => {
-    const { id } = req.params
-    const resourceUpdate = await Resource.findByIdAndUpdate(id, { ...req.body.resource }, { new: true })
-    res.json({ resourceUpdate })
-}))
-
-app.delete('/resources/:id', catchAsync (async (req,res) => {
-    const { id } = req.params
-    const resourceDelete = await Resource.findByIdAndDelete(id)
-    res.json({ resourceDelete })
-}))
