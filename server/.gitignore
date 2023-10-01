@@ -1,3 +1,6 @@
 # Server Side - Dependencies
 /node_modules
-.env
+/src/.env
+/controllers
+/data
+/routes
